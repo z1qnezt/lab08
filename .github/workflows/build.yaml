@@ -1,0 +1,20 @@
+name: Build and Run
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Build Docker image
+      run: docker build -t hello_log .
+
+    - name: Run Docker container
+      run: docker run --name hello_log-container hello_log
+
+    - name: Copy output file
+      run: docker cp hello_log-container:/usr/src/app/log.txt ./log.txt
